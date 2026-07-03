@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>今日运势测算</title>
+    <style>
+        body { 
+            font-family: 'Microsoft YaHei', sans-serif; 
+            background-color: #ffe4e1; 
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            font-size: 18px; /* 整体字号调大 */
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+        }
+        h1 { color: #ff69b4; margin-bottom: 25px; font-size: 28px; }
+        .row { margin: 20px 0; text-align: left; display: flex; align-items: center; justify-content: center; }
+        label { font-weight: bold; margin-right: 10px; }
+        input, select { padding: 12px; border-radius: 8px; border: 1px solid #ddd; width: 60%; font-size: 16px; }
+        button { 
+            background-color: #ff69b4; color: white; border: none; 
+            padding: 15px 30px; border-radius: 25px; cursor: pointer; 
+            font-weight: bold; margin-top: 20px; transition: 0.3s; font-size: 18px;
+        }
+        button:hover { background-color: #ff85c1; transform: scale(1.05); }
+        #result { margin-top: 25px; text-align: left; line-height: 1.8; font-size: 17px; }
+        .copy-btn { background-color: #87ceeb; margin-top: 15px; font-size: 14px; padding: 8px 20px; border: none; border-radius: 15px; color: white; cursor: pointer;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>测测你今天的运势</h1>
+        
+        <div class="row">
+            <label>出生日期：</label>
+            <input type="date" id="birthdate">
+        </div>
+        
+        <div class="row">
+            <label>性别：</label>
+            <select id="gender">
+                <option value="男">男</option>
+                <option value="女" selected>女</option>
+            </select>
+        </div>
+        
+        <button onclick="getFortune()">生成今日运势</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // 页面加载时，自动将日期设为 2000-01-01
+        window.onload = function() {
+            document.getElementById('birthdate').value = "2000-01-01";
+        };
+
+        function getFortune() {
+            const birthdate = document.getElementById('birthdate').value;
+            if (!birthdate) { alert("记得先选个出生日期哦！"); return; }
+
+            const luckIndex = Math.floor(Math.random() * 40) + 60;
+            const colors = ["樱花粉", "薄荷绿", "星空蓝", "明亮黄", "薰衣草紫", "奶油白", "活力橙"];
+            const luckyColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            const fortunes = [
+                "今天会有意想不到的惊喜，生活处处充满小确幸，保持好心情哦！",
+                "保持专注，今天你的效率会像开了挂一样，记得奖励自己一杯奶茶。",
+                "适合社交的一天，你的魅力值爆表，大胆去表达你的想法吧！",
+                "今天运气值满格，无论做什么决定，跟着直觉走准没错。",
+                "虽然今天可能会有点小忙，但你的努力会被大家看到，加油！",
+                "会有老朋友联系你，聊聊近况，心情会变得很舒畅。",
+                "今天非常适合做决策，你的直觉非常敏锐，相信自己！",
+                "财运小幅上升，可能会有意外的小收获，比如捡到优惠券或者中奖。",
+                "适合整理办公桌或房间，环境变整洁了，心情也会跟着变好。",
+                "今天会有新的灵感迸发，赶紧记下来，说不定就是下一个爆款方案！",
+                "虽然过程有点波折，但结局会出乎意料的好，放宽心。",
+                "今天适合学习新技能，吸收能力超强，事半功倍。",
+                "会有贵人相助，遇到难题时不妨多问问身边的同事。",
+                "心情指数爆表，看什么都顺眼，今天就是你的幸运日！",
+                "适合给自己安排一个放松的傍晚，看场电影或者散散步。"
+            ];
+            
+            const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+            
+            const resultText = `✨ 幸运指数：${luckIndex}分\n🎨 幸运色：${luckyColor}\n🔮 运势寄语：${randomFortune}`;
+            
+            document.getElementById('result').innerHTML = `
+                <div style="padding:20px; background:#fff0f5; border-radius:15px; border:1px solid #ffb6c1; margin-top:20px;">
+                    <p style="white-space: pre-wrap; text-align: left;">${resultText}</p>
+                    <button class="copy-btn" onclick="copyResult()">复制结果</button>
+                </div>
+            `;
+        }
+
+        function copyResult() {
+            const text = document.querySelector('#result p').innerText;
+            navigator.clipboard.writeText(text).then(() => alert("复制成功，快去分享吧！"));
+        }
+    </script>
+</body>
+</html>
